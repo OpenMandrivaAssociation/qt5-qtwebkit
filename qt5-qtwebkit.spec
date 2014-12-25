@@ -15,6 +15,8 @@
 %define qtwebkitwidgetsd %mklibname qt%{api}webkitwidgets -d
 %define qtwebkitwidgets_p_d %mklibname qt%{api}webkitwidgets-private -d
 
+%define _qt5_prefix %{_libdir}/qt%{api}
+
 %define qttarballdir qtwebkit-opensource-src-%{qtversion}
 
 Name:		qt5-qtwebkit
@@ -40,7 +42,8 @@ BuildRequires:	flex
 BuildRequires:	gperf
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(udev)
-BuildRequires:	pkgconfig(Qt5Declarative) = %{version}
+# fix me
+#BuildRequires:	pkgconfig(Qt5Declarative) = %{version}
 BuildRequires:	pkgconfig(Qt5Widgets)  = %{version}
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(fontconfig)
@@ -58,7 +61,6 @@ Qt WebKit library is an open source web browser engine.
 %files
 %{_qt5_prefix}/libexec/QtWebPluginProcess
 %{_qt5_prefix}/libexec/QtWebProcess
-%{_qt5_prefix}/qml/QtWebKit
 
 #------------------------------------------------------------------------------
 
@@ -89,22 +91,22 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %{_qt5_libdir}/pkgconfig/Qt5WebKitWidgets.pc
 %{_qt5_includedir}/QtWebKitWidgets
 %exclude %{_qt5_includedir}/QtWebKitWidgets/%qtversion
-%{_qt5_datadir}/mkspecs/modules/qt_lib_webkitwidgets.pri
+%{_qt5_prefix}/mkspecs/modules/qt_lib_webkitwidgets.pri
 %{_qt5_libdir}/cmake/Qt5WebKitWidgets
 
 #------------------------------------------------------------------------------
 
-%package -n %{libqt5webkitwidgets_p_d}
+%package -n %{qtwebkitwidgets_p_d}
 Summary: Devel files needed to build apps based on QtWebKitWidgets
 Group:    Development/KDE and Qt
 Requires: %{qtwebkitwidgetsd} = %version
 
-%description -n %{libqt5webkitwidgets_p_d}
+%description -n %{qtwebkitwidgets_p_d}
 Devel files needed to build apps based on QtWebKitWidgets.
 
-%files -n %{libqt5webkitwidgets_p_d}
+%files -n %{qtwebkitwidgets_p_d}
 %{_qt5_includedir}/QtWebKitWidgets/%qtversion
-%{_qt5_datadir}/mkspecs/modules/qt_lib_webkitwidgets_private.pri
+%{_qt5_prefix}/mkspecs/modules/qt_lib_webkitwidgets_private.pri
 
 #------------------------------------------------------------------------------
 
@@ -134,7 +136,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %{_qt5_libdir}/pkgconfig/Qt5WebKit.pc
 %{_qt5_includedir}/QtWebKit
 %exclude %{_qt5_includedir}/QtWebKit/%qtversion
-%{_qt5_datadir}/mkspecs/modules/qt_lib_webkit.pri
+%{_qt5_prefix}/mkspecs/modules/qt_lib_webkit.pri
 %{_qt5_libdir}/cmake/Qt5WebKit
 
 #------------------------------------------------------------------------------
@@ -150,7 +152,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkit_p_d}
 %{_qt5_includedir}/QtWebKit/%qtversion
-%{_qt5_datadir}/mkspecs/modules/qt_lib_webkit_private.pri
+%{_qt5_prefix}/mkspecs/modules/qt_lib_webkit_private.pri
 
 #------------------------------------------------------------------------------
 
@@ -165,7 +167,11 @@ grep -rl "'python'" . |xargs sed -i -e "s,'python','python2',g"
 sed -i -e "s,python,python2,g" Source/*/DerivedSources.pri
 
 %build
-%qmake_qt5
+%qmake_qt5 \
+%ifarch aarch64
+	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0
+%endif
+
 %make
 
 #------------------------------------------------------------------------------
