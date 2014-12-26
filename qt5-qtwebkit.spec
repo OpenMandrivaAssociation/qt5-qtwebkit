@@ -52,6 +52,7 @@ BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(Qt5Quick) = %{version}
+BuildRequires:	qt5-qtquick-private-devel = %{version}
 BuildRequires:	pkgconfig(Qt5Qml) = %{version}
 BuildRequires:	icu-devel
 
