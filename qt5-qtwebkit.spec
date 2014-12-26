@@ -44,7 +44,7 @@ BuildRequires:	ruby
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(udev)
 # fix me
-#BuildRequires:	pkgconfig(Qt5Declarative) = %{version}
+BuildRequires:	pkgconfig(Qt5Declarative) = %{version}
 BuildRequires:	pkgconfig(Qt5Widgets)  = %{version}
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(fontconfig)
@@ -63,6 +63,7 @@ Qt WebKit library is an open source web browser engine.
 %files
 %{_qt5_prefix}/libexec/QtWebPluginProcess
 %{_qt5_prefix}/libexec/QtWebProcess
+%{_qt5_prefix}/qml/QtWebKit
 
 #------------------------------------------------------------------------------
 
