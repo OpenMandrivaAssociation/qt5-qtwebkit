@@ -40,6 +40,7 @@ BuildRequires:	pkgconfig(gstreamer-audio-1.0)
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gperf
+BuildRequires:	ruby
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(udev)
 # fix me
