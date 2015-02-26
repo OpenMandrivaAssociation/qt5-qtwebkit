@@ -2,7 +2,7 @@
 %define major %api
 
 %define qtminor 4
-%define qtsubminor 0
+%define qtsubminor 1
 
 %define major_private 1
 %define qtversion %{major}.%{qtminor}.%{qtsubminor}
