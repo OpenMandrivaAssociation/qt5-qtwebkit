@@ -1,11 +1,11 @@
-%define api 5
+%define api %(echo %{version} |cut -d. -f1)
 %define major %api
 
-%define qtminor 4
-%define qtsubminor 1
+%define qtminor %(echo %{version} |cut -d. -f2)
+%define qtsubminor %(echo %{version} |cut -d. -f3)
+%define beta alpha
 
 %define major_private 1
-%define qtversion %{major}.%{qtminor}.%{qtsubminor}
 
 %define qtwebkit %mklibname qt%{api}webkit %{major}
 %define qtwebkitd %mklibname qt%{api}webkit -d
@@ -17,16 +17,21 @@
 
 %define _qt5_prefix %{_libdir}/qt%{api}
 
-%define qttarballdir qtwebkit-opensource-src-%{qtversion}
+%define qttarballdir qtwebkit-opensource-src-%{version}%{?beta:-%{beta}}
 
 Name:		qt5-qtwebkit
-Version:	%{qtversion}
+Version:	5.5.0
+%if "%{beta}" != ""
+Release:	0.%{beta}.1
+Source0:	http://download.qt.io/development_releases/qt/%{major}.%{qtminor}/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
+%else
 Release:	1
+Source0:	http://download.qt-project.org/official_releases/qt/%{major}.%{qtminor}/%{version}/submodules/%{qttarballdir}.tar.xz
+%endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt-project.org
-Source0:	http://download.qt-project.org/official_releases/qt/%{major}.%{qtminor}/%{version}/submodules/%{qttarballdir}.tar.xz
 Patch0:		0001-Add-ARM-64-support.patch
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(sqlite3)
@@ -44,7 +49,7 @@ BuildRequires:	ruby
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(udev)
 # fix me
-BuildRequires:	pkgconfig(Qt5Declarative) = %{version}
+#BuildRequires:	pkgconfig(Qt5Declarative) = %{version}
 BuildRequires:	pkgconfig(Qt5Widgets)  = %{version}
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(fontconfig)
@@ -93,7 +98,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %{_qt5_libdir}/libQt5WebKitWidgets.prl
 %{_qt5_libdir}/pkgconfig/Qt5WebKitWidgets.pc
 %{_qt5_includedir}/QtWebKitWidgets
-%exclude %{_qt5_includedir}/QtWebKitWidgets/%qtversion
+%exclude %{_qt5_includedir}/QtWebKitWidgets/%version
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webkitwidgets.pri
 %{_qt5_libdir}/cmake/Qt5WebKitWidgets
 
@@ -108,7 +113,7 @@ Requires: %{qtwebkitwidgetsd} = %version
 Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkitwidgets_p_d}
-%{_qt5_includedir}/QtWebKitWidgets/%qtversion
+%{_qt5_includedir}/QtWebKitWidgets/%version
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webkitwidgets_private.pri
 
 #------------------------------------------------------------------------------
@@ -138,7 +143,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %{_qt5_libdir}/libQt5WebKit.prl
 %{_qt5_libdir}/pkgconfig/Qt5WebKit.pc
 %{_qt5_includedir}/QtWebKit
-%exclude %{_qt5_includedir}/QtWebKit/%qtversion
+%exclude %{_qt5_includedir}/QtWebKit/%version
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webkit.pri
 %{_qt5_libdir}/cmake/Qt5WebKit
 
@@ -154,7 +159,7 @@ Provides: qt5-qtwebkit-private-devel = %version
 Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkit_p_d}
-%{_qt5_includedir}/QtWebKit/%qtversion
+%{_qt5_includedir}/QtWebKit/%version
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webkit_private.pri
 
 #------------------------------------------------------------------------------
