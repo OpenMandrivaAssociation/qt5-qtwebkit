@@ -3,7 +3,7 @@
 
 %define qtminor %(echo %{version} |cut -d. -f2)
 %define qtsubminor %(echo %{version} |cut -d. -f3)
-%define beta beta
+%define beta rc
 
 %define major_private 1
 
@@ -22,7 +22,7 @@
 Name:		qt5-qtwebkit
 Version:	5.5.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.2
+Release:	0.%{beta}.1
 Source0:	http://download.qt.io/development_releases/qt/%{major}.%{qtminor}/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
 Release:	1
