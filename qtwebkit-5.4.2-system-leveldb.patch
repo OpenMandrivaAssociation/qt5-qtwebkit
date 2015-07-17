@@ -1,0 +1,25 @@
+Correct header location so system dev-libs/leveldb can be detected.
+
+--- qtwebkit-opensource-src-5.5.0/Tools/qmake/config.tests/leveldb/leveldb.cpp
++++ qtwebkit-opensource-src-5.5.0/Tools/qmake/config.tests/leveldb/leveldb.cpp
+@@ -19,7 +19,7 @@
+ 
+ #include <leveldb/db.h>
+ #include <leveldb/env.h>
+-#include <helpers/memenv/memenv.h>
++#include <leveldb/helpers/memenv.h>
+ 
+ int main(int, char**)
+ {
+
+--- qtwebkit-opensource-src-5.5.0/Source/WebCore/platform/leveldb/LevelDBDatabase.cpp
++++ qtwebkit-opensource-src-5.5.0/Source/WebCore/platform/leveldb/LevelDBDatabase.cpp
+@@ -38,7 +38,7 @@
+ #include <leveldb/comparator.h>
+ #include <leveldb/db.h>
+ #include <leveldb/env.h>
+-#include <helpers/memenv/memenv.h>
++#include <leveldb/helpers/memenv.h>
+ #include <leveldb/slice.h>
+ #include <string>
+ #include <wtf/PassOwnPtr.h>

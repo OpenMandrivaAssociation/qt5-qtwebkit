@@ -33,6 +33,7 @@ Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 Patch0:		0001-Add-ARM-64-support.patch
+Patch1:		qtwebkit-5.4.2-system-leveldb.patch
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
@@ -42,6 +43,7 @@ BuildRequires:	pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires:	pkgconfig(gstreamer-video-1.0)
 BuildRequires:	pkgconfig(gstreamer-audio-1.0)
+BuildRequires:	pkgconfig(leveldb)
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gperf
@@ -173,6 +175,14 @@ grep -rl "env python" . |xargs sed -i -e "s,env python,env python2,g"
 grep -rl "/python$" . |xargs sed -i -e "s,/python$,/python2,g"
 grep -rl "'python'" . |xargs sed -i -e "s,'python','python2',g"
 sed -i -e "s,python,python2,g" Source/*/DerivedSources.pri
+
+# https://bugs.gentoo.org/show_bug.cgi?id=466216
+sed -i -e '/CONFIG +=/s/rpath//' \
+	Source/WebKit/qt/declarative/{experimental/experimental,public}.pri \
+	Tools/qmake/mkspecs/features/{force_static_libs_as_shared,unix/default_post}.prf
+
+# ensure bundled library cannot be used
+rm -r Source/ThirdParty/leveldb
 
 %build
 %qmake_qt5 \
