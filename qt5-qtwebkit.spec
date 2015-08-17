@@ -16,6 +16,7 @@
 %define qtwebkitwidgets_p_d %mklibname qt%{api}webkitwidgets-private -d
 
 %define _qt5_prefix %{_libdir}/qt%{api}
+%define _disable_lto 1
 
 Name:		qt5-qtwebkit
 Version:	5.5.0
@@ -24,7 +25,7 @@ Release:	1.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	2
+Release:	3
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
