@@ -35,6 +35,7 @@ License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 Patch0:		0001-Add-ARM-64-support.patch
 Patch1:		qtwebkit-5.4.2-system-leveldb.patch
+Patch2:		qtwebkit-opensource-src-5.2.0-save_memory.patch
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
@@ -184,6 +185,13 @@ sed -i -e '/CONFIG +=/s/rpath//' \
 
 # ensure bundled library cannot be used
 rm -r Source/ThirdParty/leveldb
+
+# remove rpath
+find ./ -type f -name \*.pr\* | \
+while read f; do
+    sed -i &#39;s|\(^CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
+    sed -i &#39;s|\([[:space:]]CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
+done
 
 %build
 %qmake_qt5 \
