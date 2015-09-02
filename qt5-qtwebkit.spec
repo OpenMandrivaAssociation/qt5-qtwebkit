@@ -172,6 +172,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %setup -q -n %qttarballdir
 %apply_patches
 
+# disable it when building with other than LLVM/clang
+grep -rl "cruT" * | xargs sed -i 's/cruT/cru/g'
+
 # Build scripts aren't ready for python3
 grep -rl "env python" . |xargs sed -i -e "s,env python,env python2,g"
 grep -rl "/python$" . |xargs sed -i -e "s,/python$,/python2,g"
