@@ -1,0 +1,17 @@
+diff --git a/Source/JavaScriptCore/LLIntOffsetsExtractor.pro b/Source/JavaScriptCore/LLIntOffsetsExtractor.pro
+index 9cbc424..1fc6c1d 100644
+--- a/Source/JavaScriptCore/LLIntOffsetsExtractor.pro
++++ b/Source/JavaScriptCore/LLIntOffsetsExtractor.pro
+@@ -13,11 +13,7 @@ debug_and_release {
+     CONFIG += build_all
+ }
+ 
+-# Don't try to link against any Qt libraries, but at least
+-# pull in include paths as we include qglobal.h.
+-INCLUDEPATH += $$QT.core.includes
+-CONFIG += console
+-CONFIG -= qt
++QT = core # Needed for qglobal.h
+ 
+ defineTest(addIncludePaths) {
+     # Just needed for include paths

@@ -36,6 +36,8 @@ URL:		http://www.qt.io
 Patch0:		0001-Add-ARM-64-support.patch
 Patch1:		qtwebkit-5.4.2-system-leveldb.patch
 Patch2:		qtwebkit-opensource-src-5.2.0-save_memory.patch
+Patch3:		03_hide_std_symbols.diff
+Patch4:		link-qtcore.patch
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
@@ -172,6 +174,8 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %setup -q -n %qttarballdir
 %apply_patches
 
+export LDFLAGS="%{ldflags} -Wl,--reduce-memory-overheads -Wl,--no-keep-memory -Wl,--as-needed"
+
 # disable it when building with other than LLVM/clang
 grep -rl "cruT" * | xargs sed -i 's/cruT/cru/g'
 
@@ -192,14 +196,14 @@ rm -r Source/ThirdParty/leveldb
 # remove rpath
 find ./ -type f -name \*.pr\* | \
 while read f; do
-    sed -i &#39;s|\(^CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
-    sed -i &#39;s|\([[:space:]]CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
+    sed -i 's|\(^CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
+    sed -i 's|\([[:space:]]CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
 done
 
 %build
 %qmake_qt5 \
 %ifarch aarch64
-	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0
+	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
 
 %make
