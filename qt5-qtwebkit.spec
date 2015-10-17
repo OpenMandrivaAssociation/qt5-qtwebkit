@@ -207,6 +207,11 @@ done
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
 
+# where comes from that LTO ?
+printenv
+
+grep -r "flto" *
+
 %make
 
 #------------------------------------------------------------------------------
