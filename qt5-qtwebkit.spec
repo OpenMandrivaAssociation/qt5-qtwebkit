@@ -35,7 +35,8 @@ License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 Patch0:		0001-Add-ARM-64-support.patch
 Patch1:		qtwebkit-5.4.2-system-leveldb.patch
-Patch2:		qtwebkit-opensource-src-5.2.0-save_memory.patch
+# these commands are not recognized by ld.gold 0_o wtf ?
+#Patch2:		qtwebkit-opensource-src-5.2.0-save_memory.patch
 Patch3:		03_hide_std_symbols.diff
 Patch4:		link-qtcore.patch
 BuildRequires:	qt5-qtbase-devel = %{version}
