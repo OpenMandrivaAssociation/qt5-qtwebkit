@@ -207,10 +207,8 @@ done
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
 
-# where comes from that LTO ?
-printenv
-
-grep -r "flto" *
+# (tpg) get rid of FLTO out of nowehre
+grep -rl "flto" * | xargs sed -i -e "s/-flto//g"
 
 %make
 
