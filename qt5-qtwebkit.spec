@@ -174,6 +174,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %setup -q -n %qttarballdir
 %apply_patches
 
+# force disable lto
+%global optflags %{optflags} -fno-lto
+
 export LDFLAGS="%{ldflags} -Wl,--as-needed"
 
 # disable it when building with other than LLVM/clang
