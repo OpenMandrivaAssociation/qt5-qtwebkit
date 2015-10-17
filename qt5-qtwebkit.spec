@@ -203,7 +203,7 @@ done
 
 %build
 export QMAKE_CXXFLAGS_RELEASE="%{optflags} -fno-lto"
-%qmake_qt5 \
+%qmake_qt5 QMAKE_CXXFLAGS_RELEASE="%{optflags} -fno-lto" \
 %ifarch aarch64
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
@@ -211,7 +211,7 @@ export QMAKE_CXXFLAGS_RELEASE="%{optflags} -fno-lto"
 # (tpg) get rid of FLTO out of nowehre
 grep -rl "flto" * | xargs sed -i -e 's/-flto//g'
 
-%make QMAKE_CXXFLAGS_RELEASE="%{optflags} -fno-lto"
+%make
 
 #------------------------------------------------------------------------------
 
