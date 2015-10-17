@@ -175,13 +175,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %setup -q -n %qttarballdir
 %apply_patches
 
-# force disable lto
-%global optflags %{optflags} -fno-lto
-%global ldflags %{ldflags} -fno-lto
+export LDFLAGS="%{ldflags} -Wl,--as-needed"
 
-export LDFLAGS="%{ldflags} -fno-lto -Wl,--as-needed"
-
-# disable it when building with other than LLVM/clang
+# disable it when building with LLVM/clang
 grep -rl "cruT" * | xargs sed -i 's/cruT/cru/g'
 
 # Build scripts aren't ready for python3
