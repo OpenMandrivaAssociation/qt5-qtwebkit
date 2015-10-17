@@ -202,15 +202,16 @@ while read f; do
 done
 
 %build
+export QMAKE_CXXFLAGS_RELEASE="%{optflags} -fno-lto"
 %qmake_qt5 \
 %ifarch aarch64
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
 
 # (tpg) get rid of FLTO out of nowehre
-grep -rl "flto" * | xargs sed -i -e "s/-flto//g"
+grep -rl "flto" * | xargs sed -i -e 's/-flto//g'
 
-%make
+%make QMAKE_CXXFLAGS_RELEASE="%{optflags} -fno-lto"
 
 #------------------------------------------------------------------------------
 
