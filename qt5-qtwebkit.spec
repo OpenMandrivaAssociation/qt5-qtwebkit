@@ -16,7 +16,6 @@
 %define qtwebkitwidgets_p_d %mklibname qt%{api}webkitwidgets-private -d
 
 %define _qt5_prefix %{_libdir}/qt%{api}
-%define _disable_lto 1
 
 Name:		qt5-qtwebkit
 Version:	5.5.1
@@ -39,6 +38,7 @@ Patch1:		qtwebkit-5.4.2-system-leveldb.patch
 #Patch2:		qtwebkit-opensource-src-5.2.0-save_memory.patch
 Patch3:		03_hide_std_symbols.diff
 Patch4:		link-qtcore.patch
+Patch5:		qtwebkit-5.5.1-lto.patch
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
@@ -177,7 +177,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 export LDFLAGS="%{ldflags} -Wl,--as-needed"
 
-# disable it when building with LLVM/clang
+# disable it when building without LLVM/clang
 grep -rl "cruT" * | xargs sed -i 's/cruT/cru/g'
 
 # Build scripts aren't ready for python3
@@ -202,14 +202,10 @@ while read f; do
 done
 
 %build
-export QMAKE_CXXFLAGS_RELEASE="%{optflags} -fno-lto"
-%qmake_qt5 QMAKE_CXXFLAGS_RELEASE="%{optflags} -fno-lto" \
+%qmake_qt5 \
 %ifarch aarch64
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
-
-# (tpg) get rid of FLTO out of nowehre
-grep -rl "flto" * | xargs sed -i -e 's/-flto//g'
 
 %make
 
