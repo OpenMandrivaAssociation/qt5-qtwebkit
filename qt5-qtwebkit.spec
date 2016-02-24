@@ -175,7 +175,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %setup -q -n %qttarballdir
 %apply_patches
 
-export LDFLAGS="%{ldflags} -Wl,--as-needed"
+export LDFLAGS="%{ldflags} -Wl,--as-needed -fuse-ld=bfd"
 
 # disable it when building without LLVM/clang
 grep -rl "cruT" * | xargs sed -i 's/cruT/cru/g'
