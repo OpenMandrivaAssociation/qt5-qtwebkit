@@ -17,6 +17,8 @@
 
 %define _qt5_prefix %{_libdir}/qt%{api}
 
+%define _disable_lto 1
+
 Name:		qt5-qtwebkit
 Version:	5.5.1
 %if "%{beta}" != ""
@@ -24,7 +26,7 @@ Release:	1.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	3
+Release:	4
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -38,7 +40,8 @@ Patch1:		qtwebkit-5.4.2-system-leveldb.patch
 #Patch2:		qtwebkit-opensource-src-5.2.0-save_memory.patch
 Patch3:		03_hide_std_symbols.diff
 Patch4:		link-qtcore.patch
-Patch5:		qtwebkit-5.5.1-lto.patch
+# Still kept in the repository so we can re-enable it when we re-enable LTO
+#Patch5:		qtwebkit-5.5.1-lto.patch
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
