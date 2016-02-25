@@ -22,7 +22,7 @@
 Name:		qt5-qtwebkit
 Version:	5.5.1
 %if "%{beta}" != ""
-Release:	1.%{beta}.1
+Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
@@ -178,7 +178,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %setup -q -n %qttarballdir
 %apply_patches
 
-export LDFLAGS="%{ldflags} -Wl,--as-needed -Wl,--no-keep-memory"
+export LDFLAGS="%{ldflags} -Wl,--as-needed -Wl,--no-keep-memory -g1"
 
 # disable it when building without LLVM/clang
 grep -rl "cruT" * | xargs sed -i 's/cruT/cru/g'
