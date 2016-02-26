@@ -36,12 +36,14 @@ License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 Patch0:		0001-Add-ARM-64-support.patch
 Patch1:		qtwebkit-5.4.2-system-leveldb.patch
-# these commands are not recognized by ld.gold 0_o wtf ?
-#Patch2:		qtwebkit-opensource-src-5.2.0-save_memory.patch
-Patch3:		03_hide_std_symbols.diff
-Patch4:		link-qtcore.patch
+Patch2:		qtwebkit-opensource-src-5.0.1-debuginfo.patch
+# (tpg) -reduce-memory-overheads is ld.gold specific so remove it from below patch
+Patch3:		qtwebkit-opensource-src-5.2.0-save_memory.patch
+Patch4:		03_hide_std_symbols.diff
+Patch5:		link-qtcore.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
-#Patch5:		qtwebkit-5.5.1-lto.patch
+#Patch6:		qtwebkit-5.5.1-lto.patch
+Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
@@ -178,7 +180,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %setup -q -n %qttarballdir
 %apply_patches
 
-export LDFLAGS="%{ldflags} -Wl,--as-needed -Wl,--no-keep-memory -g1"
+export LDFLAGS="%{ldflags} -Wl,--as-needed"
 
 # disable it when building without LLVM/clang
 grep -rl "cruT" * | xargs sed -i 's/cruT/cru/g'
