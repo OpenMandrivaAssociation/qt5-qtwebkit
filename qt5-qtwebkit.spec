@@ -210,7 +210,7 @@ done
 %ifarch armv7hl
 export CC=gcc
 export CXX=g++
-endif
+%endif
 %qmake_qt5 \
 %ifarch aarch64
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
