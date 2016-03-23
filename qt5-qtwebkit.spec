@@ -26,7 +26,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	4
+Release:	5
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -61,17 +61,17 @@ BuildRequires:	ruby
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(udev)
 # fix me
-#BuildRequires:	pkgconfig(Qt5Declarative) = %{version}
-BuildRequires:	pkgconfig(Qt5Widgets)  = %{version}
+#BuildRequires:	pkgconfig(Qt5Declarative) >= %{version}
+BuildRequires:	pkgconfig(Qt5Widgets)  >= %{version}
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	pkgconfig(Qt5Quick) = %{version}
-BuildRequires:	qt5-qtquick-private-devel = %{version}
-BuildRequires:	pkgconfig(Qt5Qml) = %{version}
+BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
+BuildRequires:	qt5-qtquick-private-devel >= %{version}
+BuildRequires:	pkgconfig(Qt5Qml) >= %{version}
 BuildRequires:	icu-devel
 
 %description
@@ -100,7 +100,7 @@ Qt%{major} Lib.
 Summary: Devel files needed to build apps based on QtWebKitWidgets
 Group:    Development/KDE and Qt
 Requires: %{qtwebkitwidgets} = %version
-Requires: qt5-qtbase-devel = %version
+Requires: qt5-qtbase-devel >= %version
 
 %description -n %{qtwebkitwidgetsd}
 Devel files needed to build apps based on QtWebKitWidgets.
