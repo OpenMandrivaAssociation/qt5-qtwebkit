@@ -44,12 +44,17 @@ Patch5:		link-qtcore.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
-BuildRequires:	pkgconfig(Qt5Core)
-BuildRequires:	pkgconfig(Qt5Gui)
-BuildRequires:	pkgconfig(Qt5Network)
-BuildRequires:	pkgconfig(Qt5Sql)
-BuildRequires:	pkgconfig(Qt5Quick)
-BuildRequires:	pkgconfig(Qt5Qml)
+BuildRequires:	qmake5
+BuildRequires:	pkgconfig(Qt5Core) >= %{version}
+BuildRequires:	pkgconfig(Qt5Gui) >= %{version}
+BuildRequires:	pkgconfig(Qt5Network) >= %{version}
+BuildRequires:	pkgconfig(Qt5Sql) >= %{version}
+BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
+BuildRequires:	qt5-qtquick-private-devel >= %{version}
+BuildRequires:	pkgconfig(Qt5Qml) >= %{version}
+# fix me
+#BuildRequires:	pkgconfig(Qt5Declarative) >= %{version}
+BuildRequires:	pkgconfig(Qt5Widgets) >= %{version}
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
 BuildRequires:	pkgconfig(gstreamer-app-1.0)
@@ -65,18 +70,12 @@ BuildRequires:	gperf
 BuildRequires:	ruby
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(udev)
-# fix me
-#BuildRequires:	pkgconfig(Qt5Declarative) >= %{version}
-BuildRequires:	pkgconfig(Qt5Widgets)  >= %{version}
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
-BuildRequires:	qt5-qtquick-private-devel >= %{version}
-BuildRequires:	pkgconfig(Qt5Qml) >= %{version}
 BuildRequires:	icu-devel
 
 %description
