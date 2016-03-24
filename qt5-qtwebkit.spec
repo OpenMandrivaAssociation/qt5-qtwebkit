@@ -28,7 +28,8 @@ Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d.
 %else
 Release:	1
 %define qttarballdir qtwebkit-opensource-src-%{version}
-Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+# 5.6.0 is not officially part of the release so get from snapshots (fedora)
+Source0:	http://download.qt.io/snapshots/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/latest_src/submodules/%{qttarballdir}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
@@ -40,11 +41,21 @@ Patch2:		qtwebkit-opensource-src-5.0.1-debuginfo.patch
 # (tpg) -reduce-memory-overheads is ld.gold specific so remove it from below patch
 Patch3:		qtwebkit-opensource-src-5.2.0-save_memory.patch
 Patch4:		03_hide_std_symbols.diff
-Patch5:		link-qtcore.patch
+#Patch5:		link-qtcore.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
-BuildRequires:	qt5-qtbase-devel = %{version}
+BuildRequires:	qmake5
+BuildRequires:	pkgconfig(Qt5Core) >= %{version}
+BuildRequires:	pkgconfig(Qt5Gui) >= %{version}
+BuildRequires:	pkgconfig(Qt5Network) >= %{version}
+BuildRequires:	pkgconfig(Qt5Sql) >= %{version}
+BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
+BuildRequires:	qt5-qtquick-private-devel >= %{version}
+BuildRequires:	pkgconfig(Qt5Qml) >= %{version}
+# fix me
+#BuildRequires:	pkgconfig(Qt5Declarative) >= %{version}
+BuildRequires:	pkgconfig(Qt5Widgets) >= %{version}
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
 BuildRequires:	pkgconfig(gstreamer-app-1.0)
@@ -60,18 +71,12 @@ BuildRequires:	gperf
 BuildRequires:	ruby
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(udev)
-# fix me
-#BuildRequires:	pkgconfig(Qt5Declarative) >= %{version}
-BuildRequires:	pkgconfig(Qt5Widgets)  >= %{version}
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(fontconfig)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
-BuildRequires:	qt5-qtquick-private-devel >= %{version}
-BuildRequires:	pkgconfig(Qt5Qml) >= %{version}
 BuildRequires:	icu-devel
 
 %description
