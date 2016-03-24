@@ -20,15 +20,16 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.5.1
+Version:	5.6.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	5
+Release:	1
 %define qttarballdir qtwebkit-opensource-src-%{version}
-Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+# 5.6.0 is not officially part of the release so get from snapshots (fedora)
+Source0:	http://download.qt.io/snapshots/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/latest_src/submodules/%{qttarballdir}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
@@ -40,7 +41,7 @@ Patch2:		qtwebkit-opensource-src-5.0.1-debuginfo.patch
 # (tpg) -reduce-memory-overheads is ld.gold specific so remove it from below patch
 Patch3:		qtwebkit-opensource-src-5.2.0-save_memory.patch
 Patch4:		03_hide_std_symbols.diff
-Patch5:		link-qtcore.patch
+#Patch5:		link-qtcore.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch

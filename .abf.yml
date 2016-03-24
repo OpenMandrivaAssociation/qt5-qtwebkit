@@ -1,2 +1,4 @@
-sources:
+removed_sources:
   qtwebkit-opensource-src-5.5.1.tar.xz: e1e16f3eb48c1ce863b9ab33364e4ac178ae51a7
+sources:
+  qtwebkit-opensource-src-5.6.0.tar.xz: 2eeddaf394d311725a76a2997226994c8f9f4019
