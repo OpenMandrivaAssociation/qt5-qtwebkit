@@ -20,13 +20,13 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.5.1
+Version:	5.6.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	5
+Release:	1
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	http://download.qt.io/official_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
 %endif
@@ -216,12 +216,87 @@ export CXX=g++
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
 
+%make || :
+
+# Make sure the likes of #include <QtWebKit/qwebkitglobal.h>
+# can work even before a "make install" of any sort...
+# (can do this only after an initial failure - make seems to wipe
+# the include/directory structure on first run)
+ln -s . Source/WebKit/qt/Api/QtWebKit
+ln -s . Source/WebKit/qt/WidgetApi/QtWebKitWidgets
+# It's even worse for *_p.h header fun...
+mkdir -p include/private
+ln -s $(pwd)/Source/WebKit2/UIProcess/API/qt/*_p.h include/private
+ln -s $(pwd)/Source/WebKit/qt/Api/qwebkitglobal.h include/private
+
 %make
 
 #------------------------------------------------------------------------------
 
 %install
 %makeinstall_std INSTALL_ROOT=%{buildroot}
+
+# What's the matter with qtwebkit includes???
+# Broken again here, let's fix it...
+mkdir -p %{buildroot}%{_includedir}/qt5/QtWebKitWidgets/%{version}/QtWebKitWidgets/private
+mkdir -p %{buildroot}%{_includedir}/qt5/QtWebKit/%{version}/QtWebKit/private
+
+find . -type d -iname api |while read r; do
+	cp -a $r/*.h %{buildroot}%{_includedir}/qt5/QtWebKit/
+done
+cp -a Source/WebKit/qt/WidgetApi/*.h %{buildroot}%{_includedir}/qt5/QtWebKitWidgets/
+cd %{buildroot}%{_includedir}/qt5/QtWebKit
+mv *_p.h %{version}/QtWebKit/private/
+for i in *.h; do
+	grep '^class' $i |grep -v ';' |cut -d: -f2 |sed -e 's,{,,;s, $,,' |rev |cut -d' ' -f1 |rev |while read cl; do
+		echo "#include \"$i\"" >$cl
+	done
+done
+cat >QtWebKitDepends <<'EOF'
+#include <QtCore/QtCore>
+#include <QtGui/QtGui>
+#include <QtNetwork/QtNetwork>
+EOF
+cat >QtWebKitVersion <<'EOF'
+#include "qtwebkitversion.h"
+EOF
+cat >QtWebKit <<'EOF'
+#ifndef QT_QTWEBKIT_MODULE_H
+#define QT_QTWEBKIT_MODULE_H
+#include <QtWebKit/QtWebKitDepends>
+EOF
+for i in *.h; do
+	echo "#include \"$i\"" >>QtWebKit
+done
+echo '#endif' >>QtWebKit
+cd -
+cd %{buildroot}%{_includedir}/qt5/QtWebKitWidgets
+mv *_p.h %{version}/QtWebKitWidgets/private/
+for i in *.h; do
+	grep '^class' $i |grep -v ';' |cut -d: -f2 |sed -e 's,{,,;s, $,,' |rev |cut -d' ' -f1 |rev |while read cl; do
+		echo "#include \"$i\"" >$cl
+	done
+done
+cat >QtWebKitWidgetsDepends <<'EOF'
+#include <QtCore/QtCore>
+#include <QtGui/QtGui>
+#include <QtWidgets/QtWidgets>
+#include <QtNetwork/QtNetwork>
+#include <QtWebKit/QtWebKit>
+EOF
+cat >QtWebKitWidgetsVersion <<'EOF'
+#include "qtwebkitwidgetsversion.h"
+EOF
+cat >QtWebKitWidgets <<'EOF'
+#ifndef QT_QTWEBKITWIDGETS_MODULE_H
+#define QT_QTWEBKITWIDGETS_MODULE_H
+#include <QtWebKitWidgets/QtWebKitWidgetsDepends>
+EOF
+for i in *.h; do
+	echo "#include \"$i\"" >>QtWebKitWidgets
+done
+echo '#endif' >>QtWebKitWidgets
+cd -
 
 ## .prl/.la file love
 # nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
