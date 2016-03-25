@@ -57,6 +57,7 @@ BuildRequires:	pkgconfig(Qt5OpenGL) >= %{version}
 # fix me
 #BuildRequires:	pkgconfig(Qt5Declarative) >= %{version}
 BuildRequires:	pkgconfig(Qt5Widgets) >= %{version}
+BuildRequires:	pkgconfig(Qt5PrintSupport) >= %{version}
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
 BuildRequires:	pkgconfig(gstreamer-app-1.0)
