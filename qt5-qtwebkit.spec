@@ -53,6 +53,7 @@ BuildRequires:	pkgconfig(Qt5Sql) >= %{version}
 BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
 BuildRequires:	qt5-qtquick-private-devel >= %{version}
 BuildRequires:	pkgconfig(Qt5Qml) >= %{version}
+BuildRequires:	pkgconfig(Qt5OpenGL) >= %{version}
 # fix me
 #BuildRequires:	pkgconfig(Qt5Declarative) >= %{version}
 BuildRequires:	pkgconfig(Qt5Widgets) >= %{version}
