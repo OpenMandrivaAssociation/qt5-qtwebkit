@@ -18,6 +18,8 @@
 %define _qt5_prefix %{_libdir}/qt%{api}
 
 %define _disable_lto 1
+# ARMv7
+%define _disable_neon 1
 
 Name:		qt5-qtwebkit
 Version:	5.6.0
