@@ -18,8 +18,6 @@
 %define _qt5_prefix %{_libdir}/qt%{api}
 
 %define _disable_lto 1
-# ARMv7
-%define _disable_neon 1
 
 Name:		qt5-qtwebkit
 Version:	5.6.0
@@ -28,7 +26,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	1.1
 %define qttarballdir qtwebkit-opensource-src-%{version}
 # 5.6.0 is not officially part of the release so get from snapshots (fedora)
 Source0:	http://download.qt.io/snapshots/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/latest_src/submodules/%{qttarballdir}.tar.xz
