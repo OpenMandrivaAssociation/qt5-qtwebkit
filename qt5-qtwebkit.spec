@@ -28,8 +28,7 @@ Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d.
 %else
 Release:	1.1
 %define qttarballdir qtwebkit-opensource-src-%{version}
-# 5.6.0 is not officially part of the release so get from snapshots (fedora)
-Source0:	http://download.qt.io/snapshots/qt/%(echo %{version}|cut -d. -f1-2)/%{version}/latest_src/submodules/%{qttarballdir}.tar.xz
+Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}/%{qttarballdir}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
