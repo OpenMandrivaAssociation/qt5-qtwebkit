@@ -20,9 +20,9 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.6.0
+Version:	5.6.1
 %if "%{beta}" != ""
-Release:	0.%{beta}.1
+Release:	1.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
 %else
@@ -44,10 +44,6 @@ Patch4:		03_hide_std_symbols.diff
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
-# WebKit use libpthread directly but is depending on other qt modules
-# causing it to be linked against, which might break unless -lpthread
-# is last.
-Patch8:		0004-Fix-linking-with-libpthread.patch
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= %{version}
 BuildRequires:	pkgconfig(Qt5Gui) >= %{version}
