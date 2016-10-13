@@ -20,7 +20,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.6.1
+Version:	5.6.2
 %if "%{beta}" != ""
 Release:	1.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
