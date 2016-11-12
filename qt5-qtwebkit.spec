@@ -3,7 +3,7 @@
 
 %define qtminor %(echo %{version} |cut -d. -f2)
 %define qtsubminor %(echo %{version} |cut -d. -f3)
-%define beta %nil
+%define beta beta
 
 %define major_private 1
 
@@ -20,13 +20,13 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.7.0
+Version:	5.8.0
 %if "%{beta}" != ""
-Release:	1.%{beta}.1
+Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
-Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
+Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.xz
 %else
-Release:	1.1
+Release:	1
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}/%{qttarballdir}.tar.xz
 %endif
@@ -44,6 +44,7 @@ Patch4:		03_hide_std_symbols.diff
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
+Patch8:		qtwebkit-5.8.0-compile.patch
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= %{version}
 BuildRequires:	pkgconfig(Qt5Gui) >= %{version}
@@ -84,7 +85,6 @@ BuildRequires:	icu-devel
 Qt WebKit library is an open source web browser engine.
 
 %files
-%{_qt5_prefix}/libexec/QtWebPluginProcess
 %{_qt5_prefix}/libexec/QtWebProcess
 %{_qt5_prefix}/qml/QtWebKit
 

@@ -1,0 +1,11 @@
+--- qtwebkit-opensource-src-5.8.0-beta/Tools/qmake/mkspecs/features/default_pre.prf.omv~	2016-11-12 02:49:03.200399884 +0100
++++ qtwebkit-opensource-src-5.8.0-beta/Tools/qmake/mkspecs/features/default_pre.prf	2016-11-12 02:49:10.741228122 +0100
+@@ -64,7 +64,7 @@ else: PYTHON = python
+ 
+ # We use private_tests to detect developer build, since the destdir will
+ # always be our webkit build dir. This might change as configure changes.
+-qtConfig(private_tests): CONFIG += qt_developer_build
++#qtConfig(private_tests): CONFIG += qt_developer_build
+ 
+ # By default we enable "production build", and build-webkit, which is
+ # used by bots and developers, will disable it, to enable warnings etc.
