@@ -3,7 +3,7 @@
 
 %define qtminor %(echo %{version} |cut -d. -f2)
 %define qtsubminor %(echo %{version} |cut -d. -f3)
-%define beta %nil
+%define beta %{nil}
 
 %define major_private 1
 
@@ -20,15 +20,15 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.6.2
+Version:	5.8.0
 %if "%{beta}" != ""
-Release:	1.%{beta}.1
+Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
-Source0:	http://download.qt.io/development_releases/qt/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
+Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.xz
 %else
-Release:	1.1
+Release:	1
 %define qttarballdir qtwebkit-opensource-src-%{version}
-Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}/%{qttarballdir}.tar.xz
+Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-final/%{qttarballdir}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
@@ -84,7 +84,6 @@ BuildRequires:	icu-devel
 Qt WebKit library is an open source web browser engine.
 
 %files
-%{_qt5_prefix}/libexec/QtWebPluginProcess
 %{_qt5_prefix}/libexec/QtWebProcess
 %{_qt5_prefix}/qml/QtWebKit
 
