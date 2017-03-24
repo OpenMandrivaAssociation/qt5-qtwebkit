@@ -1,9 +1,15 @@
+# In the future, we may want to switch to this fork:
+# https://github.com/annulen/webkit
+# Seems to be more actively developed.
+# See also Comment #3 on
+# https://bugreports.qt.io/browse/QTBUG-55950
+
 %define api %(echo %{version} |cut -d. -f1)
 %define major %api
 
 %define qtminor %(echo %{version} |cut -d. -f2)
 %define qtsubminor %(echo %{version} |cut -d. -f3)
-%define beta %{nil}
+%define beta alpha
 
 %define major_private 1
 
@@ -20,7 +26,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.8.0
+Version:	5.9.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
@@ -40,7 +46,7 @@ Patch2:		qtwebkit-opensource-src-5.0.1-debuginfo.patch
 # (tpg) -reduce-memory-overheads is ld.gold specific so remove it from below patch
 Patch3:		qtwebkit-opensource-src-5.2.0-save_memory.patch
 Patch4:		03_hide_std_symbols.diff
-#Patch5:		link-qtcore.patch
+Patch5:		qtwebkit-5.9.0-compile.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
