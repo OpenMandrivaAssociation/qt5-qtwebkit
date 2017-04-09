@@ -9,7 +9,7 @@
 
 %define qtminor %(echo %{version} |cut -d. -f2)
 %define qtsubminor %(echo %{version} |cut -d. -f3)
-%define beta alpha
+%define beta beta
 
 %define major_private 1
 
@@ -46,7 +46,6 @@ Patch2:		qtwebkit-opensource-src-5.0.1-debuginfo.patch
 # (tpg) -reduce-memory-overheads is ld.gold specific so remove it from below patch
 Patch3:		qtwebkit-opensource-src-5.2.0-save_memory.patch
 Patch4:		03_hide_std_symbols.diff
-Patch5:		qtwebkit-5.9.0-compile.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
@@ -91,6 +90,7 @@ Qt WebKit library is an open source web browser engine.
 
 %files
 %{_qt5_prefix}/libexec/QtWebProcess
+%{_qt5_prefix}/libexec/QtWebPluginProcess
 %{_qt5_prefix}/qml/QtWebKit
 
 #------------------------------------------------------------------------------
