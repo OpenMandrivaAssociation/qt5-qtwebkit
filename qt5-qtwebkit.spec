@@ -9,7 +9,7 @@
 
 %define qtminor %(echo %{version} |cut -d. -f2)
 %define qtsubminor %(echo %{version} |cut -d. -f3)
-%define beta beta
+%define beta beta4
 
 %define major_private 1
 
