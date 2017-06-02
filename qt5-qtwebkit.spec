@@ -32,7 +32,7 @@ Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.xz
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-final/%{qttarballdir}.tar.xz
 %endif
@@ -193,8 +193,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 export LDFLAGS="%{ldflags} -Wl,--as-needed"
 
-# disable it when building without LLVM/clang
-grep -rl "cruT" * | xargs sed -i 's/cruT/cru/g'
+# Make sure we use LTO when linking to -lmemenv (it's a static library
+# containing LLVM bytecode...)
+sed -i -e 's,-lmemenv,-flto -lmemenv,g' Source/WebCore/WebCore.pri Tools/qmake/config.tests/leveldb/leveldb.pro
 
 # Build scripts aren't ready for python3
 grep -rl "env python" . |xargs sed -i -e "s,env python,env python2,g"
