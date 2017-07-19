@@ -223,6 +223,7 @@ done
 
 %build
 %qmake_qt5 \
+	-spec linux-clang \
 %ifarch %{armx}
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
