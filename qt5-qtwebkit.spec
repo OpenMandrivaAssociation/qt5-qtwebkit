@@ -3,7 +3,7 @@
 
 %define qtminor %(echo %{version} |cut -d. -f2)
 %define qtsubminor %(echo %{version} |cut -d. -f3)
-%define beta %{nil}
+%define beta alpha2
 
 %define major_private 1
 
@@ -20,43 +20,51 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.8.0
+Version:	5.212.0
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
-%define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
+%define qttarballdir qtwebkit-%{version}-%{beta}
+# qtwebkit-opensource-src-5.212.0-alpha2.tar.xz
+# qtwebkit-5.212.0-alpha2.tar.xz
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.xz
 %else
-Release:	2
-%define qttarballdir qtwebkit-opensource-src-%{version}
+Release:	1
+%define qttarballdir qtwebkit-%{version}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-final/%{qttarballdir}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
-Patch0:		0001-Add-ARM-64-support.patch
-Patch1:		qtwebkit-5.4.2-system-leveldb.patch
-Patch2:		qtwebkit-opensource-src-5.0.1-debuginfo.patch
-# (tpg) -reduce-memory-overheads is ld.gold specific so remove it from below patch
-Patch3:		qtwebkit-opensource-src-5.2.0-save_memory.patch
-Patch4:		03_hide_std_symbols.diff
-#Patch5:		link-qtcore.patch
-# Still kept in the repository so we can re-enable it when we re-enable LTO
-#Patch6:		qtwebkit-5.5.1-lto.patch
-Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
+
+# Upstream patch to fix pagewidth issue with trojita
+# https://github.com/annulen/webkit/issues/511
+# https://github.com/annulen/webkit/commit/6faf11215e1af27d35e921ae669aa0251a01a1ab
+# https://github.com/annulen/webkit/commit/76420459a13d9440b41864c93cb4ebb404bdab55
+Patch0:         qt5-qtwebkit-5.212.0-alpha2-fix-pagewidth.patch
+
+# Patch from Kevin Kofler to fix https://github.com/annulen/webkit/issues/573
+Patch1:         qtwebkit-5.212.0-alpha2-fix-null-pointer-dereference.patch
+
+# Patch for new CMake policy CMP0071 to explicitly use old behaviour.
+Patch2:         qtwebkit-5.212.0_cmake_cmp0071.patch
+
+# Patch to fix for missing source file.
+Patch3:         qtwebkit-5.212.0_fix_missing_sources.patch
+
 BuildRequires:	qmake5
-BuildRequires:	pkgconfig(Qt5Core) >= %{version}
-BuildRequires:	pkgconfig(Qt5Gui) >= %{version}
-BuildRequires:	pkgconfig(Qt5Network) >= %{version}
-BuildRequires:	pkgconfig(Qt5Sql) >= %{version}
-BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
-BuildRequires:	qt5-qtquick-private-devel >= %{version}
-BuildRequires:	pkgconfig(Qt5Qml) >= %{version}
-BuildRequires:	pkgconfig(Qt5OpenGL) >= %{version}
+BuildRequires:	pkgconfig(Qt5Core)
+BuildRequires:	pkgconfig(Qt5Gui)
+BuildRequires:	pkgconfig(Qt5Network)
+BuildRequires:	pkgconfig(Qt5Sql)
+BuildRequires:	pkgconfig(Qt5Quick)
+BuildRequires:	qt5-qtquick-private-devel
+BuildRequires:	pkgconfig(Qt5Qml)
+BuildRequires:	pkgconfig(Qt5OpenGL)
 # fix me
-#BuildRequires:	pkgconfig(Qt5Declarative) >= %{version}
-BuildRequires:	pkgconfig(Qt5Widgets) >= %{version}
-BuildRequires:	pkgconfig(Qt5PrintSupport) >= %{version}
+#BuildRequires:	pkgconfig(Qt5Declarative)
+BuildRequires:	pkgconfig(Qt5Widgets)
+BuildRequires:	pkgconfig(Qt5PrintSupport)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
 BuildRequires:	pkgconfig(gstreamer-app-1.0)
@@ -66,6 +74,10 @@ BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires:	pkgconfig(gstreamer-video-1.0)
 BuildRequires:	pkgconfig(gstreamer-audio-1.0)
 BuildRequires:	pkgconfig(leveldb)
+BuildRequires:	cmake(Qt5Test)
+BuildRequires:	cmake(Qt5QuickTest)
+BuildRequires:	cmake(Qt5Positioning)
+BuildRequires:	hyphen-devel
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gperf
@@ -187,35 +199,11 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 export LDFLAGS="%{ldflags} -Wl,--as-needed"
 
-# disable it when building without LLVM/clang
-grep -rl "cruT" * | xargs sed -i 's/cruT/cru/g'
-
-# Build scripts aren't ready for python3
-grep -rl "env python" . |xargs sed -i -e "s,env python,env python2,g"
-grep -rl "/python$" . |xargs sed -i -e "s,/python$,/python2,g"
-grep -rl "'python'" . |xargs sed -i -e "s,'python','python2',g"
-sed -i -e "s,python,python2,g" Source/*/DerivedSources.pri
-
-# https://bugs.gentoo.org/show_bug.cgi?id=466216
-sed -i -e '/CONFIG +=/s/rpath//' \
-	Source/WebKit/qt/declarative/{experimental/experimental,public}.pri \
-	Tools/qmake/mkspecs/features/{force_static_libs_as_shared,unix/default_post}.prf
-
-# ensure bundled library cannot be used
-rm -r Source/ThirdParty/leveldb
-
-# remove rpath
-find ./ -type f -name \*.pr\* | \
-while read f; do
-    sed -i 's|\(^CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
-    sed -i 's|\([[:space:]]CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
-done
-
-# Fix up headers...
-[ -d include ] || %{_libdir}/qt5/bin/syncqt.pl -version %{version} Source/sync.profile
-
 %build
-%qmake_qt5 \
+%cmake_qt5 \
+	-DPORT=Qt \
+	-DENABLE_TOOLS=OFF \
+	-DCMAKE_BUILD_TYPE=Release \
 %ifarch %{armx}
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
@@ -242,6 +230,15 @@ for prl_file in libQt5*.prl ; do
   fi
 done
 popd
+
+# fix pkgconfig files
+sed -i '/Name/a Description: Qt5 WebKit module' %{buildroot}%{_libdir}/pkgconfig/Qt5WebKit.pc
+sed -i "s,Cflags: -I%{_qt5_libdir}/qt5/../../include/qt5/Qt5WebKit,Cflags: -I%{_qt5_headerdir}/QtWebKit,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKit.pc
+sed -i "s,Libs: -L%{_qt5_libdir}/qt5/../ -lQt5WebKit,Libs: -L%{_qt5_libdir} -lQt5WebKit ,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKit.pc
+
+sed -i '/Name/a Description: Qt5 WebKitWidgets module' %{buildroot}%{_libdir}/pkgconfig/Qt5WebKitWidgets.pc
+sed -i "s,Cflags: -I%{_qt5_libdir}/qt5/../../include/qt5/Qt5WebKitWidgets,Cflags: -I%{_qt5_headerdir}/QtWebKitWidgets,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKitWidgets.pc
+sed -i "s,Libs: -L%{_qt5_libdir}/qt5/../ -lQt5WebKitWidgets,Libs: -L%{_qt5_libdir} -lQt5WebKitWidgets ,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKitWidgets.pc
 
 # .la and .a files, die, die, die.
 rm -f %{buildroot}%{_qt5_libdir}/lib*.la
