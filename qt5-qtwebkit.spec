@@ -52,7 +52,8 @@ Patch2:         qtwebkit-5.212.0_cmake_cmp0071.patch
 # Patch to fix for missing source file.
 Patch3:         qtwebkit-5.212.0_fix_missing_sources.patch
 
-BuildRequires:	qmake5
+BuildRequires:	cmake
+BuildRequires:	qt5-macros
 BuildRequires:	pkgconfig(Qt5Core)
 BuildRequires:	pkgconfig(Qt5Gui)
 BuildRequires:	pkgconfig(Qt5Network)
