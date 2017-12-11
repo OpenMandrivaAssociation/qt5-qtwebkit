@@ -80,6 +80,7 @@ BuildRequires:	cmake(Qt5Test)
 BuildRequires:	cmake(Qt5QuickTest)
 BuildRequires:	cmake(Qt5Positioning)
 BuildRequires:	cmake(Qt5Sensors)
+BuildRequires:	cmake(Qt5WebChannel)
 BuildRequires:	hyphen-devel
 BuildRequires:	bison
 BuildRequires:	flex
