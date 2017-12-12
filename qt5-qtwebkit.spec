@@ -101,7 +101,9 @@ Qt WebKit library is an open source web browser engine.
 
 %files
 %{_qt5_prefix}/libexec/QtWebProcess
-%{_qt5_prefix}/qml/QtWebKit
+%{_qt5_prefix}/libexec/QtWebDatabaseProcess
+%{_qt5_prefix}/libexec/QtWebNetworkProcess
+%{_qt5_libdir}/qml/QtWebKit
 
 #------------------------------------------------------------------------------
 
@@ -130,9 +132,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %{_qt5_libdir}/libQt5WebKitWidgets.so
 %{_qt5_libdir}/libQt5WebKitWidgets.prl
 %{_qt5_libdir}/pkgconfig/Qt5WebKitWidgets.pc
-%{_qt5_includedir}/QtWebKitWidgets
-%exclude %{_qt5_includedir}/QtWebKitWidgets/%version
-%{_qt5_prefix}/mkspecs/modules/qt_lib_webkitwidgets.pri
+%{_includedir}/QtWebKitWidgets
+%exclude %{_includedir}/QtWebKitWidgets/%version
+%{_prefix}/mkspecs/modules/qt_lib_webkitwidgets.pri
 %{_qt5_libdir}/cmake/Qt5WebKitWidgets
 
 #------------------------------------------------------------------------------
@@ -173,12 +175,11 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkitd}
 %{_qt5_libdir}/libQt5WebKit.so
-%{_qt5_libdir}/libQt5WebKit.prl
 %{_qt5_libdir}/pkgconfig/Qt5WebKit.pc
-%{_qt5_includedir}/QtWebKit
-%exclude %{_qt5_includedir}/QtWebKit/%version
-%{_qt5_prefix}/mkspecs/modules/qt_lib_webkit.pri
 %{_qt5_libdir}/cmake/Qt5WebKit
+%{_includedir}/QtWebKit
+%exclude %{_includedir}/QtWebKit/%version
+%{_prefix}/mkspecs/modules/qt_lib_webkit.pri
 
 #------------------------------------------------------------------------------
 
@@ -192,8 +193,8 @@ Provides: qt5-qtwebkit-private-devel = %version
 Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkit_p_d}
-%{_qt5_includedir}/QtWebKit/%version
-%{_qt5_prefix}/mkspecs/modules/qt_lib_webkit_private.pri
+%{_includedir}/QtWebKit/%version
+%{_prefix}/mkspecs/modules/qt_lib_webkit_private.pri
 
 #------------------------------------------------------------------------------
 
