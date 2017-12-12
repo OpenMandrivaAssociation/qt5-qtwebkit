@@ -208,8 +208,8 @@ export LDFLAGS="%{ldflags} -Wl,--as-needed"
 	-DPORT=Qt \
 	-DENABLE_TOOLS=OFF \
 	-DCMAKE_BUILD_TYPE=Release \
-%ifarch %{armx}
-	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
+%ifarch %{arm}
+	-DENABLE_JIT=OFF
 %endif
 
 %ifarch %{arm}
@@ -221,19 +221,7 @@ export LDFLAGS="%{ldflags} -Wl,--as-needed"
 #------------------------------------------------------------------------------
 
 %install
-%makeinstall_std INSTALL_ROOT=%{buildroot}
-
-## .prl/.la file love
-# nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
-pushd %{buildroot}%{_qt5_libdir}
-for prl_file in libQt5*.prl ; do
-  sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" ${prl_file}
-  if [ -f "$(basename ${prl_file} .prl).so" ]; then
-    rm -fv "$(basename ${prl_file} .prl).la"
-    sed -i -e "/^QMAKE_PRL_LIBS/d" ${prl_file}
-  fi
-done
-popd
+%makeinstall_std INSTALL_ROOT=%{buildroot} -C build
 
 # fix pkgconfig files
 sed -i '/Name/a Description: Qt5 WebKit module' %{buildroot}%{_libdir}/pkgconfig/Qt5WebKit.pc
