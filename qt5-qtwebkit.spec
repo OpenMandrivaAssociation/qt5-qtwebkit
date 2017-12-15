@@ -100,9 +100,9 @@ BuildRequires:	icu-devel
 Qt WebKit library is an open source web browser engine.
 
 %files
-%{_qt5_prefix}/libexec/QtWebProcess
-%{_qt5_prefix}/libexec/QtWebDatabaseProcess
-%{_qt5_prefix}/libexec/QtWebNetworkProcess
+%{_libexecdir}/QtWebProcess
+%{_libexecdir}/QtWebDatabaseProcess
+%{_libexecdir}/QtWebNetworkProcess
 %{_qt5_libdir}/qml/QtWebKit
 
 #------------------------------------------------------------------------------
@@ -149,7 +149,6 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkitwidgets_p_d}
 %{_qt5_includedir}/QtWebKitWidgets/%version
-%{_qt5_prefix}/mkspecs/modules/qt_lib_webkitwidgets_private.pri
 
 #------------------------------------------------------------------------------
 
@@ -194,7 +193,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkit_p_d}
 %{_includedir}/QtWebKit/%version
-%{_prefix}/mkspecs/modules/qt_lib_webkit_private.pri
+
 
 #------------------------------------------------------------------------------
 
