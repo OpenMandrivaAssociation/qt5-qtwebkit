@@ -103,6 +103,7 @@ Qt WebKit library is an open source web browser engine.
 %{_libdir}/libexec/QtWebProcess
 %{_libdir}/libexec/QtWebDatabaseProcess
 %{_libdir}/libexec/QtWebNetworkProcess
+%{_libdir}/libexec/QtWebPluginProcess
 %{_qt5_libdir}/qml/QtWebKit
 
 #------------------------------------------------------------------------------
