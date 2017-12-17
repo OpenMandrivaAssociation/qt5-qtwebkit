@@ -131,7 +131,6 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkitwidgetsd}
 %{_qt5_libdir}/libQt5WebKitWidgets.so
-%{_qt5_libdir}/libQt5WebKitWidgets.prl
 %{_qt5_libdir}/pkgconfig/Qt5WebKitWidgets.pc
 %{_includedir}/QtWebKitWidgets
 %exclude %{_includedir}/QtWebKitWidgets/%version
