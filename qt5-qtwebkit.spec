@@ -22,7 +22,7 @@
 Name:		qt5-qtwebkit
 Version:	5.212.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.1
+Release:	0.%{beta}.2
 %define qttarballdir qtwebkit-%{version}-%{beta}
 # qtwebkit-opensource-src-5.212.0-alpha2.tar.xz
 # qtwebkit-5.212.0-alpha2.tar.xz
@@ -200,6 +200,16 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %prep
 %setup -q -n %qttarballdir
 %apply_patches
+
+
+# force using system library
+sed -i -e 's/qtConfig(system-jpeg)/true/' \
+	-e 's/qtConfig(system-png)/true/' \
+	Tools/qmake/mkspecs/features/functions.prf
+
+# use webp
+sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
+		Tools/qmake/mkspecs/features/functions.prf
 
 export LDFLAGS="%{ldflags} -Wl,--as-needed"
 
