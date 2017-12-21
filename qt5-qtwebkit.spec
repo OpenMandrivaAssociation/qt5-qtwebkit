@@ -22,7 +22,7 @@
 Name:		qt5-qtwebkit
 Version:	5.212.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.2
+Release:	0.%{beta}.3
 %define qttarballdir qtwebkit-%{version}-%{beta}
 # qtwebkit-opensource-src-5.212.0-alpha2.tar.xz
 # qtwebkit-5.212.0-alpha2.tar.xz
@@ -123,8 +123,8 @@ Qt%{major} Lib.
 %package -n %{qtwebkitwidgetsd}
 Summary: Devel files needed to build apps based on QtWebKitWidgets
 Group:    Development/KDE and Qt
-Requires: %{qtwebkitwidgets} = %version
-Requires: qt5-qtbase-devel >= %version
+Requires: %{qtwebkitwidgets}
+Requires: qt5-qtbase-devel
 
 %description -n %{qtwebkitwidgetsd}
 Devel files needed to build apps based on QtWebKitWidgets.
@@ -142,7 +142,7 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %package -n %{qtwebkitwidgets_p_d}
 Summary: Devel files needed to build apps based on QtWebKitWidgets
 Group:    Development/KDE and Qt
-Requires: %{qtwebkitwidgetsd} = %version
+Requires: %{qtwebkitwidgetsd}
 
 %description -n %{qtwebkitwidgets_p_d}
 Devel files needed to build apps based on QtWebKitWidgets.
