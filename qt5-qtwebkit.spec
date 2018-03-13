@@ -214,7 +214,17 @@ sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
 export LDFLAGS="%{ldflags} -Wl,--as-needed"
 
 %build
-%cmake_qt5 \
+%setup_compile_flags
+QTDIR="%{_libdir}/qt5" ; export QTDIR ;
+PATH="%{_qt5_bindir}:$PATH" ; export PATH;
+CPPFLAGS="${CPPFLAGS:-$CPPFLAGS -DPIC -fPIC}" ; export CPPFLAGS ;
+CFLAGS="${CFLAGS:-$CFLAGS -DPIC -fPIC}" ; export CFLAGS ; 
+CXXFLAGS="${CXXFLAGS:-$CXXFLAGS -DPIC -fPIC}" ; export CXXFLAGS ; 
+LDFLAGS="${LDFLAGS:-$LDFLAGS -DPIC -fPIC -Wl,-Bsymbolic-functions}" ; export LDFLAGS ; 
+mkdir -p build 
+cd build 
+
+%__cmake .. \
 	-DPORT=Qt \
 	-DENABLE_TOOLS=OFF \
 	-DCMAKE_BUILD_TYPE=Release \
