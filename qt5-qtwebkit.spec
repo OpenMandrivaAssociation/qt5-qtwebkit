@@ -100,11 +100,11 @@ BuildRequires:	icu-devel
 Qt WebKit library is an open source web browser engine.
 
 %files
-%{_libdir}/libexec/QtWebProcess
-%{_libdir}/libexec/QtWebDatabaseProcess
-%{_libdir}/libexec/QtWebNetworkProcess
-%{_libdir}/libexec/QtWebPluginProcess
-%{_qt5_libdir}/qml/QtWebKit
+%{_libdir}/qt5/libexec/QtWebProcess
+%{_libdir}/qt5/libexec/QtWebDatabaseProcess
+%{_libdir}/qt5/libexec/QtWebNetworkProcess
+%{_libdir}/qt5/libexec/QtWebPluginProcess
+%{_qt5_libdir}/qt5/qml/QtWebKit
 
 #------------------------------------------------------------------------------
 
@@ -132,9 +132,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %files -n %{qtwebkitwidgetsd}
 %{_qt5_libdir}/libQt5WebKitWidgets.so
 %{_qt5_libdir}/pkgconfig/Qt5WebKitWidgets.pc
-%{_includedir}/QtWebKitWidgets
-%exclude %{_includedir}/QtWebKitWidgets/%version
-%{_prefix}/mkspecs/modules/qt_lib_webkitwidgets.pri
+%{_qt5_includedir}/QtWebKitWidgets
+%exclude %{_qt5_includedir}/QtWebKitWidgets/%version
+%{_qt5_libdir}/qt5/mkspecs/modules/qt_lib_webkitwidgets.pri
 %{_qt5_libdir}/cmake/Qt5WebKitWidgets
 
 #------------------------------------------------------------------------------
@@ -148,7 +148,7 @@ Requires: %{qtwebkitwidgetsd}
 Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkitwidgets_p_d}
-%{_includedir}/QtWebKitWidgets/%version
+%{_qt5_includedir}/QtWebKitWidgets/%version
 
 #------------------------------------------------------------------------------
 
@@ -176,9 +176,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 %{_qt5_libdir}/libQt5WebKit.so
 %{_qt5_libdir}/pkgconfig/Qt5WebKit.pc
 %{_qt5_libdir}/cmake/Qt5WebKit
-%{_includedir}/QtWebKit
-%exclude %{_includedir}/QtWebKit/%version
-%{_prefix}/mkspecs/modules/qt_lib_webkit.pri
+%{_qt5_includedir}/QtWebKit
+%exclude %{_qt5_includedir}/QtWebKit/%version
+%{_libdir}/qt5/mkspecs/modules/qt_lib_webkit.pri
 
 #------------------------------------------------------------------------------
 
@@ -192,7 +192,7 @@ Provides: qt5-qtwebkit-private-devel = %version
 Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkit_p_d}
-%{_includedir}/QtWebKit/%version
+%{_qt5_includedir}/QtWebKit/%version
 
 
 #------------------------------------------------------------------------------
@@ -245,11 +245,11 @@ cd build
 
 # fix pkgconfig files
 sed -i '/Name/a Description: Qt5 WebKit module' %{buildroot}%{_libdir}/pkgconfig/Qt5WebKit.pc
-sed -i "s,Cflags: -I%{_qt5_libdir}/qt5/../../include/qt5/Qt5WebKit,Cflags: -I%{_qt5_headerdir}/QtWebKit,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKit.pc
+sed -i "s,Cflags: -I%{_qt5_libdir}/qt5/../../include/qt5/Qt5WebKit,Cflags: -I%{_qt5_includedir}/QtWebKit,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKit.pc
 sed -i "s,Libs: -L%{_qt5_libdir}/qt5/../ -lQt5WebKit,Libs: -L%{_qt5_libdir} -lQt5WebKit ,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKit.pc
 
 sed -i '/Name/a Description: Qt5 WebKitWidgets module' %{buildroot}%{_libdir}/pkgconfig/Qt5WebKitWidgets.pc
-sed -i "s,Cflags: -I%{_qt5_libdir}/qt5/../../include/qt5/Qt5WebKitWidgets,Cflags: -I%{_qt5_headerdir}/QtWebKitWidgets,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKitWidgets.pc
+sed -i "s,Cflags: -I%{_qt5_libdir}/qt5/../../include/qt5/Qt5WebKitWidgets,Cflags: -I%{_qt5_includedir}/QtWebKitWidgets,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKitWidgets.pc
 sed -i "s,Libs: -L%{_qt5_libdir}/qt5/../ -lQt5WebKitWidgets,Libs: -L%{_qt5_libdir} -lQt5WebKitWidgets ,g" %{buildroot}%{_libdir}/pkgconfig/Qt5WebKitWidgets.pc
 
 # .la and .a files, die, die, die.
