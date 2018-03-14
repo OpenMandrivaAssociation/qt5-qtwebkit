@@ -214,6 +214,10 @@ sed -i -e '/config_libwebp: WEBKIT_CONFIG += use_webp/d' \
 export LDFLAGS="%{ldflags} -Wl,--as-needed"
 
 %build
+%ifarch %{ix86}
+# reduce mem consumption
+%global optflags %(echo %{optflags} | sed -e 's/-g /-g0 /' -e 's/-gdwarf-4//')
+%endif
 %setup_compile_flags
 QTDIR="%{_libdir}/qt5" ; export QTDIR ;
 PATH="%{_qt5_bindir}:$PATH" ; export PATH;
