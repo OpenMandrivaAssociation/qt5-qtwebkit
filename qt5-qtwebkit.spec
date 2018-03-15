@@ -32,6 +32,7 @@ Release:	1
 %define qttarballdir qtwebkit-%{version}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-final/%{qttarballdir}.tar.xz
 %endif
+Source100:	qt5-qtwebkit.rpmlintrc
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
