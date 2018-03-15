@@ -217,6 +217,10 @@ export LDFLAGS="%{ldflags} -Wl,--as-needed"
 %ifarch %{ix86}
 # reduce mem consumption
 %global optflags %(echo %{optflags} | sed -e 's/-g /-g0 /' -e 's/-gdwarf-4//')
+# error: undefined reference to '__atomic_fetch_add_8'
+# with clang
+export CC=gcc
+export CXX=g++
 %endif
 %setup_compile_flags
 QTDIR="%{_libdir}/qt5" ; export QTDIR ;
