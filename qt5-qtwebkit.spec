@@ -49,6 +49,7 @@ Patch4:		03_hide_std_symbols.diff
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
+Patch8:		qtwebkit-5.9.1-armv7-assembly.patch
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= %{version}
 BuildRequires:	pkgconfig(Qt5Gui) >= %{version}
