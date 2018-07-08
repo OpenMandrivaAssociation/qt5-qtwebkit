@@ -22,7 +22,7 @@
 Name:		qt5-qtwebkit
 Version:	5.212.0
 %if "%{beta}" != ""
-Release:	0.%{beta}.4
+Release:	0.%{beta}.5
 %define qttarballdir qtwebkit-%{version}-%{beta}
 # qtwebkit-opensource-src-5.212.0-alpha2.tar.xz
 # qtwebkit-5.212.0-alpha2.tar.xz
