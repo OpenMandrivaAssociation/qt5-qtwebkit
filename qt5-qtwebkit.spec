@@ -76,6 +76,7 @@ BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gperf
 BuildRequires:	ruby
+BuildRequires:	ruby(rubygems)
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(udev)
 BuildRequires:	jpeg-devel
