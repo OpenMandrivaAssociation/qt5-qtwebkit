@@ -85,6 +85,7 @@ BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(python2)
 BuildRequires:	icu-devel
 
 %description
