@@ -1,0 +1,14 @@
+diff -up qtwebkit-opensource-src-5.9.1/Source/WebCore/platform/qt/SharedTimerQt.cpp.omv~ qtwebkit-opensource-src-5.9.1/Source/WebCore/platform/qt/SharedTimerQt.cpp
+--- qtwebkit-opensource-src-5.9.1/Source/WebCore/platform/qt/SharedTimerQt.cpp.omv~	2019-07-18 03:33:09.340169344 +0200
++++ qtwebkit-opensource-src-5.9.1/Source/WebCore/platform/qt/SharedTimerQt.cpp	2019-07-18 03:33:15.261207970 +0200
+@@ -137,8 +137,8 @@ void stopSharedTimer()
+     SharedTimerQt::inst()->stop();
+ }
+ 
+-#include "SharedTimerQt.moc"
+-
+ }
+ 
++#include "SharedTimerQt.moc"
++
+ // vim: ts=4 sw=4 et
