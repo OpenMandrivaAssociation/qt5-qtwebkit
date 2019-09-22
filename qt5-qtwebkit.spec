@@ -48,6 +48,7 @@ BuildRequires:	pkgconfig(Qt5Core) >= 5.13
 BuildRequires:	pkgconfig(Qt5Gui) >= 5.13
 BuildRequires:	pkgconfig(Qt5Network) >= 5.13
 BuildRequires:	pkgconfig(Qt5Sql) >= 5.13
+BuildRequires:	pkgconfig(Qt5Test) >= 5.13
 BuildRequires:	pkgconfig(Qt5Quick) >= 5.13
 BuildRequires:	qt5-qtquick-private-devel >= 5.13
 BuildRequires:	pkgconfig(Qt5Qml) >= 5.13
@@ -79,6 +80,7 @@ BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	icu-devel
 BuildRequires:	python2
+BuildRequires:	pkgconfig(ruby)
 
 %description
 Qt WebKit library is an open source web browser engine.
