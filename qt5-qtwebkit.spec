@@ -1,9 +1,3 @@
-# In the future, we may want to switch to this fork:
-# https://github.com/annulen/webkit
-# Seems to be more actively developed.
-# See also Comment #3 on
-# https://bugreports.qt.io/browse/QTBUG-55950
-
 %define api %(echo %{version} |cut -d. -f1)
 %define major %api
 
@@ -26,45 +20,42 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.9.1
+Version:	5.212.20190922
+# Upstream sources live at https://github.com/qtwebkit/qtwebkit
+# https://code.qt.io/qt/qtwebkit.git is a stripped down copy
+# with just what is needed to build it.
+# Tarball is built from the latter repository using
+# git archive -o qtwebkit-5.212.20190922.tar --prefix qtwebkit-5.212.20190922/ origin/5.212
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.xz
 %else
-Release:	11
+Release:	1
 %define qttarballdir qtwebkit-opensource-src-%{version}
-Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-final/%{qttarballdir}.tar.xz
+Source0:	qtwebkit-%{version}.tar.xz
 %endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 Patch0:		0001-Add-ARM-64-support.patch
-Patch1:		qtwebkit-5.4.2-system-leveldb.patch
-Patch2:		qtwebkit-opensource-src-5.0.1-debuginfo.patch
-# (tpg) -reduce-memory-overheads is ld.gold specific so remove it from below patch
-Patch3:		qtwebkit-opensource-src-5.2.0-save_memory.patch
-Patch4:		03_hide_std_symbols.diff
-# Make it build with picky compilers
-Patch5:		qtwebkit-5.9.1-compile.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
-Patch7:		qtwebkit-opensource-src-5.2.1-no_rpath.patch
 Patch8:		qtwebkit-5.9.1-armv7-assembly.patch
 BuildRequires:	qmake5
-BuildRequires:	pkgconfig(Qt5Core) >= %{version}
-BuildRequires:	pkgconfig(Qt5Gui) >= %{version}
-BuildRequires:	pkgconfig(Qt5Network) >= %{version}
-BuildRequires:	pkgconfig(Qt5Sql) >= %{version}
-BuildRequires:	pkgconfig(Qt5Quick) >= %{version}
-BuildRequires:	qt5-qtquick-private-devel >= %{version}
-BuildRequires:	pkgconfig(Qt5Qml) >= %{version}
-BuildRequires:	pkgconfig(Qt5OpenGL) >= %{version}
+BuildRequires:	pkgconfig(Qt5Core) >= 5.13
+BuildRequires:	pkgconfig(Qt5Gui) >= 5.13
+BuildRequires:	pkgconfig(Qt5Network) >= 5.13
+BuildRequires:	pkgconfig(Qt5Sql) >= 5.13
+BuildRequires:	pkgconfig(Qt5Quick) >= 5.13
+BuildRequires:	qt5-qtquick-private-devel >= 5.13
+BuildRequires:	pkgconfig(Qt5Qml) >= 5.13
+BuildRequires:	pkgconfig(Qt5OpenGL) >= 5.13
 # fix me
-#BuildRequires:	pkgconfig(Qt5Declarative) >= %{version}
-BuildRequires:	pkgconfig(Qt5Widgets) >= %{version}
-BuildRequires:	pkgconfig(Qt5PrintSupport) >= %{version}
+#BuildRequires:	pkgconfig(Qt5Declarative) >= 5.13
+BuildRequires:	pkgconfig(Qt5Widgets) >= 5.13
+BuildRequires:	pkgconfig(Qt5PrintSupport) >= 5.13
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
 BuildRequires:	pkgconfig(gstreamer-app-1.0)
@@ -73,7 +64,6 @@ BuildRequires:	pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires:	pkgconfig(gstreamer-video-1.0)
 BuildRequires:	pkgconfig(gstreamer-audio-1.0)
-BuildRequires:	pkgconfig(leveldb)
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gperf
@@ -87,7 +77,6 @@ BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(libxml-2.0)
-BuildRequires:	pkgconfig(python2)
 BuildRequires:	icu-devel
 
 %description
@@ -96,6 +85,8 @@ Qt WebKit library is an open source web browser engine.
 %files
 %{_qt5_prefix}/libexec/QtWebProcess
 %{_qt5_prefix}/libexec/QtWebPluginProcess
+%{_qt5_prefix}/libexec/QtWebStorageProcess
+%{_qt5_prefix}/libexec/QtWebNetworkProcess
 %{_qt5_prefix}/qml/QtWebKit
 
 #------------------------------------------------------------------------------
@@ -123,10 +114,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkitwidgetsd}
 %{_qt5_libdir}/libQt5WebKitWidgets.so
-%{_qt5_libdir}/libQt5WebKitWidgets.prl
 %{_qt5_libdir}/pkgconfig/Qt5WebKitWidgets.pc
 %{_qt5_includedir}/QtWebKitWidgets
-%exclude %{_qt5_includedir}/QtWebKitWidgets/%version
+%exclude %{_qt5_includedir}/QtWebKitWidgets/%(echo %version |cut -d. -f1-2).0
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webkitwidgets.pri
 %{_qt5_libdir}/cmake/Qt5WebKitWidgets
 
@@ -141,7 +131,7 @@ Requires: %{qtwebkitwidgetsd} = %version
 Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkitwidgets_p_d}
-%{_qt5_includedir}/QtWebKitWidgets/%version
+%{_qt5_includedir}/QtWebKitWidgets/%(echo %version |cut -d. -f1-2).0
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webkitwidgets_private.pri
 
 #------------------------------------------------------------------------------
@@ -168,10 +158,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkitd}
 %{_qt5_libdir}/libQt5WebKit.so
-%{_qt5_libdir}/libQt5WebKit.prl
 %{_qt5_libdir}/pkgconfig/Qt5WebKit.pc
 %{_qt5_includedir}/QtWebKit
-%exclude %{_qt5_includedir}/QtWebKit/%version
+%exclude %{_qt5_includedir}/QtWebKit/%(echo %version |cut -d. -f1-2).0
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webkit.pri
 %{_qt5_libdir}/cmake/Qt5WebKit
 
@@ -187,44 +176,13 @@ Provides: qt5-qtwebkit-private-devel = %version
 Devel files needed to build apps based on QtWebKitWidgets.
 
 %files -n %{qtwebkit_p_d}
-%{_qt5_includedir}/QtWebKit/%version
+%{_qt5_includedir}/QtWebKit/%(echo %version |cut -d. -f1-2).0
 %{_qt5_prefix}/mkspecs/modules/qt_lib_webkit_private.pri
 
 #------------------------------------------------------------------------------
 
 %prep
-%setup -q -n %qttarballdir
-%apply_patches
-
-export LDFLAGS="%{ldflags} -Wl,--as-needed"
-
-# Make sure we use LTO when linking to -lmemenv (it's a static library
-# containing LLVM bytecode...)
-sed -i -e 's,-lmemenv,-flto -lmemenv,g' Source/WebCore/WebCore.pri Tools/qmake/config.tests/leveldb/leveldb.pro
-
-# Build scripts aren't ready for python3
-grep -rl "env python" . |xargs sed -i -e "s,env python,env python2,g"
-grep -rl "/python$" . |xargs sed -i -e "s,/python$,/python2,g"
-grep -rl "'python'" . |xargs sed -i -e "s,'python','python2',g"
-sed -i -e "s,python,python2,g" Source/*/DerivedSources.pri
-
-# https://bugs.gentoo.org/show_bug.cgi?id=466216
-sed -i -e '/CONFIG +=/s/rpath//' \
-	Source/WebKit/qt/declarative/{experimental/experimental,public}.pri \
-	Tools/qmake/mkspecs/features/{force_static_libs_as_shared,unix/default_post}.prf
-
-# ensure bundled library cannot be used
-rm -r Source/ThirdParty/leveldb
-
-# remove rpath
-find ./ -type f -name \*.pr\* | \
-while read f; do
-    sed -i 's|\(^CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
-    sed -i 's|\([[:space:]]CONFIG[[:space:]][[:space:]]*+=[[:space:]].*\)rpath|\1|' $f
-done
-
-# Fix up headers...
-[ -d include ] || %{_libdir}/qt5/bin/syncqt.pl -version %{version} Source/sync.profile
+%autosetup -p1 -n qtwebkit-%{version}
 
 %build
 %qmake_qt5 \
@@ -239,19 +197,3 @@ done
 
 %install
 %makeinstall_std INSTALL_ROOT=%{buildroot}
-
-## .prl/.la file love
-# nuke .prl reference(s) to %%buildroot, excessive (.la-like) libs
-pushd %{buildroot}%{_qt5_libdir}
-for prl_file in libQt5*.prl ; do
-  sed -i -e "/^QMAKE_PRL_BUILD_DIR/d" ${prl_file}
-  if [ -f "$(basename ${prl_file} .prl).so" ]; then
-    rm -fv "$(basename ${prl_file} .prl).la"
-    sed -i -e "/^QMAKE_PRL_LIBS/d" ${prl_file}
-  fi
-done
-popd
-
-# .la and .a files, die, die, die.
-rm -f %{buildroot}%{_qt5_libdir}/lib*.la
-rm -f %{buildroot}%{_qt5_libdir}/lib*.a
