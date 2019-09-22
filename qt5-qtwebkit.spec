@@ -78,6 +78,7 @@ BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	icu-devel
+BuildRequires:	python2
 
 %description
 Qt WebKit library is an open source web browser engine.
