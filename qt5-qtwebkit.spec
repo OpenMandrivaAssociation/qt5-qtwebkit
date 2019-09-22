@@ -56,6 +56,7 @@ BuildRequires:	qt5-qtquick-private-devel >= 5.13
 BuildRequires:	pkgconfig(Qt5OpenGL) >= 5.13
 BuildRequires:	pkgconfig(Qt5Qml) >= 5.13
 BuildRequires:	pkgconfig(Qt5Sensors) >= 5.13
+BuildRequires:	pkgconfig(Qt5WebChannel) >= 5.13
 BuildRequires:	pkgconfig(Qt5Widgets) >= 5.13
 BuildRequires:	pkgconfig(Qt5PrintSupport) >= 5.13
 BuildRequires:	pkgconfig(sqlite3)
