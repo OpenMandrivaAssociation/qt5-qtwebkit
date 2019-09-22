@@ -50,6 +50,7 @@ BuildRequires:	pkgconfig(Qt5Network) >= 5.13
 BuildRequires:	pkgconfig(Qt5Sql) >= 5.13
 BuildRequires:	pkgconfig(Qt5Test) >= 5.13
 BuildRequires:	pkgconfig(Qt5Quick) >= 5.13
+BuildRequires:	pkgconfig(Qt5QuickTest) >= 5.13
 BuildRequires:	qt5-qtquick-private-devel >= 5.13
 BuildRequires:	pkgconfig(Qt5Qml) >= 5.13
 BuildRequires:	pkgconfig(Qt5OpenGL) >= 5.13
