@@ -20,7 +20,7 @@
 %define _disable_lto 1
 
 Name:		qt5-qtwebkit
-Version:	5.212.20190922
+Version:	5.212.20191114
 # Upstream sources live at https://github.com/qtwebkit/qtwebkit
 # https://code.qt.io/qt/qtwebkit.git is a stripped down copy
 # with just what is needed to build it.
