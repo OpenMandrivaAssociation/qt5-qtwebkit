@@ -19,8 +19,11 @@
 
 %define _disable_lto 1
 
+# FIXME workaround for a dependency generator bug
+%global __requires_exclude ^.*_dep.*$
+
 Name:		qt5-qtwebkit
-Version:	5.212.20191114
+Version:	5.212.20200209
 # Upstream sources live at https://github.com/qtwebkit/qtwebkit
 # https://code.qt.io/qt/qtwebkit.git is a stripped down copy
 # with just what is needed to build it.
@@ -29,11 +32,11 @@ Version:	5.212.20191114
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
-Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.xz
+Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.zst
 %else
 Release:	1
 %define qttarballdir qtwebkit-opensource-src-%{version}
-Source0:	qtwebkit-%{version}.tar.xz
+Source0:	qtwebkit-%{version}.tar.zst
 %endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
