@@ -56,6 +56,7 @@ BuildRequires:	pkgconfig(Qt5Test) >= 5.13
 BuildRequires:	pkgconfig(Qt5Quick) >= 5.13
 BuildRequires:	pkgconfig(Qt5QuickTest) >= 5.13
 BuildRequires:	pkgconfig(Qt5Positioning) >= 5.13
+BuildRequires:	cmake(Qt5XcbQpa)
 BuildRequires:	qt5-qtquick-private-devel >= 5.13
 BuildRequires:	pkgconfig(Qt5OpenGL) >= 5.13
 BuildRequires:	pkgconfig(Qt5Qml) >= 5.13
@@ -108,7 +109,7 @@ Qt WebKit library is an open source web browser engine.
 
 %files
 %{_qt5_prefix}/libexec/QtWebProcess
-%{_qt5_prefix}/libexec/QtWebPluginProcess
+%optional %{_qt5_prefix}/libexec/QtWebPluginProcess
 %{_qt5_prefix}/libexec/QtWebStorageProcess
 %{_qt5_prefix}/libexec/QtWebNetworkProcess
 %{_qt5_prefix}/qml/QtWebKit
