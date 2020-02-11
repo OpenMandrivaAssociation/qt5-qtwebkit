@@ -50,6 +50,7 @@ BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= 5.13
 BuildRequires:	pkgconfig(Qt5Gui) >= 5.13
 BuildRequires:	pkgconfig(Qt5Network) >= 5.13
+BuildRequires:	pkgconfig(Qt5Multimedia) >= 5.13
 BuildRequires:	pkgconfig(Qt5Sql) >= 5.13
 BuildRequires:	pkgconfig(Qt5Test) >= 5.13
 BuildRequires:	pkgconfig(Qt5Quick) >= 5.13
@@ -69,6 +70,7 @@ BuildRequires:	pkgconfig(gstreamer-base-1.0)
 BuildRequires:	pkgconfig(gstreamer-pbutils-1.0)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires:	pkgconfig(gstreamer-video-1.0)
+BuildRequires:	pkgconfig(gstreamer-mpegts-1.0)
 BuildRequires:	pkgconfig(gstreamer-audio-1.0)
 BuildRequires:	bison
 BuildRequires:	flex
@@ -83,6 +85,9 @@ BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(xcomposite)
 BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xext)
+BuildRequires:	pkgconfig(ice)
 BuildRequires:	icu-devel
 BuildRequires:	python2
 BuildRequires:	pkgconfig(ruby)
