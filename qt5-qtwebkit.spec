@@ -30,7 +30,7 @@ Version:	5.212.20200209
 # Tarball is built from the latter repository using
 # git archive -o qtwebkit-5.212.20190922.tar --prefix qtwebkit-5.212.20190922/ origin/5.212
 %if "%{beta}" != ""
-Release:	0.%{beta}.1
+Release:	0.%{beta}.2
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.zst
 %else
@@ -132,7 +132,7 @@ Qt%{major} Lib.
 Summary: Devel files needed to build apps based on QtWebKitWidgets
 Group:    Development/KDE and Qt
 Requires: %{qtwebkitwidgets} = %version
-Requires: qt5-qtbase-devel >= %version
+Requires: qt5-qtbase-devel >= 5.13
 
 %description -n %{qtwebkitwidgetsd}
 Devel files needed to build apps based on QtWebKitWidgets.
