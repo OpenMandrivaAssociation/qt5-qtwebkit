@@ -1,0 +1,28 @@
+diff -up qtwebkit-5.212.20200209/Tools/QtTestBrowser/CMakeLists.txt.omv~ qtwebkit-5.212.20200209/Tools/QtTestBrowser/CMakeLists.txt
+--- qtwebkit-5.212.20200209/Tools/QtTestBrowser/CMakeLists.txt.omv~	2020-02-21 16:28:24.446253373 +0100
++++ qtwebkit-5.212.20200209/Tools/QtTestBrowser/CMakeLists.txt	2020-02-21 16:28:46.194254332 +0100
+@@ -25,6 +25,7 @@ set(QtTestBrowser_SOURCES
+     qttestbrowser.cpp
+     urlloader.cpp
+     utils.cpp
++    webinspector.cpp
+     webpage.cpp
+     webview.cpp
+ )
+@@ -44,10 +45,6 @@ set(QtTestBrowser_LIBRARIES
+     ${STATIC_LIB_DEPENDENCIES}
+ )
+ 
+-qt_wrap_cpp(WebKit QtTestBrowser_SOURCES
+-    webinspector.h
+-)
+-
+ qt5_add_resources(QtTestBrowser_SOURCES
+     QtTestBrowser.qrc
+ )
+diff -up qtwebkit-5.212.20200209/Tools/QtTestBrowser/webinspector.cpp.omv~ qtwebkit-5.212.20200209/Tools/QtTestBrowser/webinspector.cpp
+--- qtwebkit-5.212.20200209/Tools/QtTestBrowser/webinspector.cpp.omv~	2020-02-21 16:27:53.187251994 +0100
++++ qtwebkit-5.212.20200209/Tools/QtTestBrowser/webinspector.cpp	2020-02-21 16:28:13.027252869 +0100
+@@ -0,0 +1,2 @@
++#include "webinspector.h"
++// Just a blank dummy file to allow automoc to do its job

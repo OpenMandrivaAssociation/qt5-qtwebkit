@@ -43,6 +43,7 @@ Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 Patch0:		0001-Add-ARM-64-support.patch
+Patch1:		qtwebkit-5.212-compile.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch8:		qtwebkit-5.9.1-armv7-assembly.patch
