@@ -30,7 +30,7 @@ Version:	5.212.20200209
 # Tarball is built from the latter repository using
 # git archive -o qtwebkit-5.212.20190922.tar --prefix qtwebkit-5.212.20190922/ origin/5.212
 %if "%{beta}" != ""
-Release:	0.%{beta}.2
+Release:	0.%{beta}.3
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.zst
 %else
@@ -47,23 +47,23 @@ Patch0:		0001-Add-ARM-64-support.patch
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch8:		qtwebkit-5.9.1-armv7-assembly.patch
 BuildRequires:	qmake5
-BuildRequires:	pkgconfig(Qt5Core) >= 5.13
-BuildRequires:	pkgconfig(Qt5Gui) >= 5.13
-BuildRequires:	pkgconfig(Qt5Network) >= 5.13
-BuildRequires:	pkgconfig(Qt5Multimedia) >= 5.13
-BuildRequires:	pkgconfig(Qt5Sql) >= 5.13
-BuildRequires:	pkgconfig(Qt5Test) >= 5.13
-BuildRequires:	pkgconfig(Qt5Quick) >= 5.13
-BuildRequires:	pkgconfig(Qt5QuickTest) >= 5.13
-BuildRequires:	pkgconfig(Qt5Positioning) >= 5.13
+BuildRequires:	pkgconfig(Qt5Core) >= 5.15
+BuildRequires:	pkgconfig(Qt5Gui) >= 5.15
+BuildRequires:	pkgconfig(Qt5Network) >= 5.15
+BuildRequires:	pkgconfig(Qt5Multimedia) >= 5.15
+BuildRequires:	pkgconfig(Qt5Sql) >= 5.15
+BuildRequires:	pkgconfig(Qt5Test) >= 5.15
+BuildRequires:	pkgconfig(Qt5Quick) >= 5.15
+BuildRequires:	pkgconfig(Qt5QuickTest) >= 5.15
+BuildRequires:	pkgconfig(Qt5Positioning) >= 5.15
 BuildRequires:	cmake(Qt5XcbQpa)
-BuildRequires:	qt5-qtquick-private-devel >= 5.13
-BuildRequires:	pkgconfig(Qt5OpenGL) >= 5.13
-BuildRequires:	pkgconfig(Qt5Qml) >= 5.13
-BuildRequires:	pkgconfig(Qt5Sensors) >= 5.13
-BuildRequires:	pkgconfig(Qt5WebChannel) >= 5.13
-BuildRequires:	pkgconfig(Qt5Widgets) >= 5.13
-BuildRequires:	pkgconfig(Qt5PrintSupport) >= 5.13
+BuildRequires:	qt5-qtquick-private-devel >= 5.15
+BuildRequires:	pkgconfig(Qt5OpenGL) >= 5.15
+BuildRequires:	pkgconfig(Qt5Qml) >= 5.15
+BuildRequires:	pkgconfig(Qt5Sensors) >= 5.15
+BuildRequires:	pkgconfig(Qt5WebChannel) >= 5.15
+BuildRequires:	pkgconfig(Qt5Widgets) >= 5.15
+BuildRequires:	pkgconfig(Qt5PrintSupport) >= 5.15
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(gstreamer-1.0)
 BuildRequires:	pkgconfig(gstreamer-app-1.0)
