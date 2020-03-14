@@ -23,14 +23,14 @@
 %global __requires_exclude ^.*_dep.*$
 
 Name:		qt5-qtwebkit
-Version:	5.212.20200209
+Version:	5.212.20200314
 # Upstream sources live at https://github.com/qtwebkit/qtwebkit
 # https://code.qt.io/qt/qtwebkit.git is a stripped down copy
 # with just what is needed to build it.
 # Tarball is built from the latter repository using
 # git archive -o qtwebkit-5.212.20190922.tar --prefix qtwebkit-5.212.20190922/ origin/5.212
 %if "%{beta}" != ""
-Release:	0.%{beta}.3
+Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.zst
 %else
@@ -43,7 +43,6 @@ Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt.io
 Patch0:		0001-Add-ARM-64-support.patch
-Patch1:		qtwebkit-5.212-compile.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch8:		qtwebkit-5.9.1-armv7-assembly.patch
