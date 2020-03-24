@@ -23,7 +23,7 @@
 %global __requires_exclude ^.*_dep.*$
 
 Name:		qt5-qtwebkit
-Version:	5.212.20200314
+Version:	5.212.20200324
 # Upstream sources live at https://github.com/qtwebkit/qtwebkit
 # https://code.qt.io/qt/qtwebkit.git is a stripped down copy
 # with just what is needed to build it.
@@ -58,6 +58,7 @@ BuildRequires:	pkgconfig(Qt5QuickTest) >= 5.15
 BuildRequires:	pkgconfig(Qt5Positioning) >= 5.15
 BuildRequires:	cmake(Qt5XcbQpa)
 BuildRequires:	qt5-qtquick-private-devel >= 5.15
+BuildRequires:	woff2-devel
 BuildRequires:	pkgconfig(Qt5OpenGL) >= 5.15
 BuildRequires:	pkgconfig(Qt5Qml) >= 5.15
 BuildRequires:	pkgconfig(Qt5Sensors) >= 5.15
@@ -77,7 +78,6 @@ BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gperf
 BuildRequires:	ruby
-BuildRequires:	ruby(rubygems)
 BuildRequires:	pkgconfig(xrender)
 BuildRequires:	pkgconfig(udev)
 BuildRequires:	jpeg-devel
