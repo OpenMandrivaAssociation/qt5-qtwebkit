@@ -30,11 +30,11 @@ Version:	5.212.20200324
 # Tarball is built from the latter repository using
 # git archive -o qtwebkit-5.212.20190922.tar --prefix qtwebkit-5.212.20190922/ origin/5.212
 %if "%{beta}" != ""
-Release:	0.%{beta}.2
+Release:	0.%{beta}.3
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.zst
 %else
-Release:	1
+Release:	2
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	qtwebkit-%{version}.tar.zst
 %endif
