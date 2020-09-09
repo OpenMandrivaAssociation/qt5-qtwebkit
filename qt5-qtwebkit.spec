@@ -23,18 +23,21 @@
 %global __requires_exclude ^.*_dep.*$
 
 Name:		qt5-qtwebkit
-Version:	5.212.20200324
+Version:	5.212.20200910
 # Upstream sources live at https://github.com/qtwebkit/qtwebkit
 # https://code.qt.io/qt/qtwebkit.git is a stripped down copy
 # with just what is needed to build it.
+# Unfortunately, as of 2020/09/09 the latter repository has been out
+# of sync for 5 months, so we have to use the former.
+# 
 # Tarball is built from the latter repository using
-# git archive -o qtwebkit-5.212.20190922.tar --prefix qtwebkit-5.212.20190922/ origin/5.212
+# git archive -o qtwebkit-5.212.20200910.tar --prefix qtwebkit-5.212.20200910/ origin/5.212
 %if "%{beta}" != ""
-Release:	0.%{beta}.3
+Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.zst
 %else
-Release:	2
+Release:	1
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	qtwebkit-%{version}.tar.zst
 %endif
@@ -216,9 +219,9 @@ Devel files needed to build apps based on QtWebKitWidgets.
 	DEFINES+=ENABLE_JIT=0 DEFINES+=ENABLE_YARR_JIT=0 DEFINES+=ENABLE_ASSEMBLER=0
 %endif
 
-%make
+%make_build
 
 #------------------------------------------------------------------------------
 
 %install
-%makeinstall_std INSTALL_ROOT=%{buildroot}
+%make_install INSTALL_ROOT=%{buildroot}
