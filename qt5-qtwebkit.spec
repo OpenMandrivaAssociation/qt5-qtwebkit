@@ -50,7 +50,7 @@ Patch0:		0001-Add-ARM-64-support.patch
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch8:		qtwebkit-5.9.1-armv7-assembly.patch
 Patch9:		qtwebkit-5.212-icu-true.patch
-Patch9:		https://src.fedoraproject.org/rpms/qt5-qtwebkit/raw/rawhide/f/qt5-qtwebkit-glib-2.68.patch
+Patch10:		https://src.fedoraproject.org/rpms/qt5-qtwebkit/raw/rawhide/f/qt5-qtwebkit-glib-2.68.patch
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= 5.15
 BuildRequires:	pkgconfig(Qt5Gui) >= 5.15
