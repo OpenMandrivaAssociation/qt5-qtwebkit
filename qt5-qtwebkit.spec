@@ -23,7 +23,7 @@
 %global __requires_exclude ^.*_dep.*$
 
 Name:		qt5-qtwebkit
-Version:	5.212.20200910
+Version:	5.212.20211230
 # Upstream sources live at https://github.com/qtwebkit/qtwebkit
 # https://code.qt.io/qt/qtwebkit.git is a stripped down copy
 # with just what is needed to build it.
@@ -31,13 +31,13 @@ Version:	5.212.20200910
 # of sync for 5 months, so we have to use the former.
 # 
 # Tarball is built from the latter repository using
-# git archive -o qtwebkit-5.212.20200910.tar --prefix qtwebkit-5.212.20200910/ origin/5.212
+# git archive -o qtwebkit-5.212.%(date +%Y%m%d).tar --prefix qtwebkit-5.212.%(date +%Y%m%d)/ origin/qtwebkit-5.212
 %if "%{beta}" != ""
 Release:	0.%{beta}.1
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.zst
 %else
-Release:	3
+Release:	1
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	qtwebkit-%{version}.tar.zst
 %endif
@@ -49,8 +49,6 @@ Patch0:		0001-Add-ARM-64-support.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch8:		qtwebkit-5.9.1-armv7-assembly.patch
-Patch9:		qtwebkit-5.212-icu-true.patch
-Patch10:		https://src.fedoraproject.org/rpms/qt5-qtwebkit/raw/rawhide/f/qt5-qtwebkit-glib-2.68.patch
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= 5.15
 BuildRequires:	pkgconfig(Qt5Gui) >= 5.15
