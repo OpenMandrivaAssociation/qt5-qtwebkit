@@ -37,7 +37,7 @@ Release:	0.%{beta}.2
 %define qttarballdir qtwebkit-opensource-src-%{version}-%{beta}
 Source0:	http://download.qt.io/community_releases/%(echo %{version}|cut -d. -f1-2)/%{version}-%{beta}/%{qttarballdir}.tar.zst
 %else
-Release:	4
+Release:	5
 %define qttarballdir qtwebkit-opensource-src-%{version}
 Source0:	qtwebkit-%{version}.tar.zst
 %endif
@@ -49,6 +49,9 @@ Patch0:		0001-Add-ARM-64-support.patch
 # Still kept in the repository so we can re-enable it when we re-enable LTO
 #Patch6:		qtwebkit-5.5.1-lto.patch
 Patch8:		qtwebkit-5.9.1-armv7-assembly.patch
+Patch9:		qtwebkit-5.212-c++17.patch
+Patch10:	qtwebkit-5.212-ruby-3.2.patch
+Patch11:	qtwebkit-5.212-libxml-2.12.patch
 BuildRequires:	qmake5
 BuildRequires:	pkgconfig(Qt5Core) >= 5.15
 BuildRequires:	pkgconfig(Qt5Gui) >= 5.15
