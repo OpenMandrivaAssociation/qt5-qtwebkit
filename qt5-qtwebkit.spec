@@ -53,6 +53,7 @@ Patch9:		qtwebkit-5.212-c++17.patch
 Patch10:	qtwebkit-5.212-ruby-3.2.patch
 Patch11:	qtwebkit-5.212-libxml-2.12.patch
 BuildRequires:	qmake5
+BuildRequires:	make
 BuildRequires:	pkgconfig(Qt5Core) >= 5.15
 BuildRequires:	pkgconfig(Qt5Gui) >= 5.15
 BuildRequires:	pkgconfig(Qt5Network) >= 5.15
